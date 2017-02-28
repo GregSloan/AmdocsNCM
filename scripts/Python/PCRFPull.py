@@ -45,16 +45,32 @@ def _ssh_command(ssh, channel, command, prompt_regex):
     return rv
 
 resource_context = helper.get_resource_context_details()
+reservation_context = helper.get_reservation_context_details()
+res_id = reservation_context.id
+api = helper.get_api_session()
 session = paramiko.SSHClient()
 session.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 session.connect(resource_context.address, 22, 'root','amdocs')
 
 channel = session.invoke_shell()
 prompt = '.*]#'
+
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending command "mkdir -p /stage')
 _ssh_command(session, channel, 'mkdir -p /stage', prompt)
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' --previous command complete')
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending command "scp root@10.53.212.105:/stage/BSR9.9/pcrf/* /stage/"')
 _ssh_command(session, channel, 'scp root@10.53.212.105:/stage/BSR9.9/pcrf/* /stage/', '.*yes/no.*')
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' --previous command complete')
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending "yes"')
 _ssh_command(session, channel, 'yes','.*password.*')
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' --previous command complete')
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending password "*****"')
 _ssh_command(session, channel, 'amdocs','.*]#')
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' --previous command complete')
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending command "scp root@10.53.212.105:/stage/iso/* /stage/"')
 _ssh_command(session, channel, 'scp root@10.53.212.105:/stage/iso/* /stage/','.*password.*')
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' --previous command complete')
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending password "*****"')
 _ssh_command(session, channel, 'amdocs', '.*]#')
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' --previous command complete')
 
