@@ -1,3 +1,4 @@
+
 import paramiko
 from cloudshell.helpers.scripts import cloudshell_scripts_helpers as helper
 import re
@@ -67,9 +68,11 @@ api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending pa
 _ssh_command(session, channel, 'amdocs','.*]#')
 api.WriteMessageToReservationOutput(res_id, resource_context.name + '  --previous command complete')
 api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending command "scp root@10.53.212.105:/stage/iso/* /stage/"')
-_ssh_command(session, channel, 'scp root@10.53.212.105:/stage/iso/* /stage/','.*password.*')
+_ssh_command(session, channel, 'scp root@10.53.212.105:/stage/iso/* /stage/', '.*yes/no.*')
+api.WriteMessageToReservationOutput(res_id, resource_context.name + '  --previous command complete')
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending "yes"')
+_ssh_command(session, channel, 'yes','.*password.*')
 api.WriteMessageToReservationOutput(res_id, resource_context.name + '  --previous command complete')
 api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending password "*****"')
 _ssh_command(session, channel, 'amdocs', '.*]#')
 api.WriteMessageToReservationOutput(res_id, resource_context.name + '  --previous command complete')
-
