@@ -57,8 +57,8 @@ prompt = '.*]#'
 api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending command "mkdir -p /stage"')
 _ssh_command(session, channel, 'mkdir -p /stage', prompt)
 api.WriteMessageToReservationOutput(res_id, resource_context.name + '  --previous command complete')
-api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending command "scp root@10.53.212.107:/stage/BSR9.9/sdb/* /stage/"')
-_ssh_command(session, channel, 'scp root@10.53.212.107:/stage/BSR9.9/sdb/* /stage/', '.*yes/no.*')
+api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending command "scp root@10.53.212.103:/stage/BSR9.9/bms/* /stage/"')
+_ssh_command(session, channel, 'scp root@10.53.212.103:/stage/BSR9.9/bms/* /stage/', '.*yes/no.*')
 api.WriteMessageToReservationOutput(res_id, resource_context.name + '  --previous command complete')
 api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending "yes"')
 _ssh_command(session, channel, 'yes','.*password.*')
@@ -72,5 +72,4 @@ api.WriteMessageToReservationOutput(res_id, resource_context.name + '  --previou
 api.WriteMessageToReservationOutput(res_id, resource_context.name + ' sending password "*****"')
 _ssh_command(session, channel, 'amdocs', '.*]#')
 api.WriteMessageToReservationOutput(res_id, resource_context.name + '  --previous command complete')
-
 
