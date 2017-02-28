@@ -67,11 +67,10 @@ session.connect(resource_context.address, 22, 'root','amdocs')
 
 channel = session.invoke_shell()
 prompt = '.*]#'
-
 _ssh_command(session, channel, 'mkdir -p /stage', prompt)
-_ssh_command(session, channel, 'scp root@10.53.212.105:/stage/BSR9.9/pcrf/* /stage/', '.*yes/no.*')
+_ssh_command(session, channel, 'scp root@10.53.212.107:/stage/BSR9.9/sdb/* /stage/', '.*yes/no.*')
 _ssh_command(session, channel, 'yes','.*password.*')
 _ssh_command(session, channel, 'amdocs','.*]#')
-_ssh_command(session, channel, 'scp root@10.53.212.105:/stage/iso/* /stage/','.*password.*')
+_ssh_command(session, channel, 'scp root@10.53.212.105:/stage/iso/* /stage/', '.*yes/no.*')
+_ssh_command(session, channel, 'yes','.*password.*')
 _ssh_command(session, channel, 'amdocs', '.*]#')
-
